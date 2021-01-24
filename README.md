@@ -1,2 +1,3 @@
 # it-school-homework
-Домашнее задание из ИТ школы Samsun
+Домашнее задание из ИТ школы Samsung
+
