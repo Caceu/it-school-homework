@@ -5,12 +5,14 @@ import jdk.jshell.spi.ExecutionControl;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Matrix {
+public class Matrix<T extends Number> {
     // Не знаю, как реализовать некоторые функции под дженерики, например сложение и вычисления, так что сделал всё с
     // интами.
 
+    private static final double EPSILON = 1e-6;
+
     public int[] dimension;
-    private int[][] data;
+    private T[][] data;
     public Matrix() {
         this.dimension = new int[]{0, 0};
     }
@@ -20,135 +22,133 @@ public class Matrix {
         // Я не знаю, как из двух массивов разной (?) длины сделать квадратную матрицу, я что-то не так понял
     }
 
-    public Matrix(int[][] m) {
+    public Matrix(T[][] m) {
         this.data = m.clone();
         this.dimension = new int[]{m.length, m[0].length};
     }
 
-    public Matrix(Matrix c) {
+    public Matrix(Matrix<T> c) {
         this.data = c.data.clone();
         this.dimension = c.dimension.clone();
     }
 
-    public Matrix add(Matrix other) throws IndexOutOfBoundsException {
+    public Matrix<T> add(Matrix other) throws IndexOutOfBoundsException {
         int m = this.dimension[0];
         int n = this.dimension[1];
         if(m == other.dimension[0] && n == other.dimension[1]){
 
-            int[][] newData = new int[m][n];
+            Matrix<T> newMatrix = new Matrix<T>(this.data);
             for(int i = 0; i < m; i++) {
                 for(int j = 0; j < n; j++) {
-                    newData[i][j] = this.data[i][j] + other.data[i][j];
+                    newMatrix.data[i][j] = (T)(Object)((double) this.data[i][j] + (double)other.data[i][j]);
                 }
             }
 
-            return new Matrix(newData);
+            return newMatrix;
         }
         else {
             throw new IndexOutOfBoundsException();
         }
     }
 
-    public Matrix subtract(Matrix other) throws IndexOutOfBoundsException {
+    public Matrix<T> subtract(Matrix<T> other) throws IndexOutOfBoundsException {
         int m = this.dimension[0];
         int n = this.dimension[1];
         if(m == other.dimension[0] && n == other.dimension[1]){
 
-            int[][] newData = new int[m][n];
+            Matrix<T> newMatrix = new Matrix<T>(this.data);
             for(int i = 0; i < m; i++) {
                 for(int j = 0; j < n; j++) {
-                    newData[i][j] = this.data[i][j] - other.data[i][j];
+                    newMatrix.data[i][j] = (T)(Object)((double) this.data[i][j] - (double)other.data[i][j]);
                 }
             }
 
-            return new Matrix(newData);
+            return newMatrix;
         }
         else {
             throw new IndexOutOfBoundsException();
         }
     }
 
-    public Matrix multiply(Matrix other) throws IndexOutOfBoundsException {
+    public Matrix<T> multiply(Matrix<T> other) throws IndexOutOfBoundsException {
         int m = this.dimension[0];
         int n = this.dimension[1];
         if(m == other.dimension[0] && n == other.dimension[1]){
 
-            int[][] newData = new int[m][n];
+            Matrix<T> newMatrix = new Matrix<T>(this.data);
             for(int i = 0; i < m; i++) {
                 for(int j = 0; j < n; j++) {
-                    newData[i][j] = this.data[i][j] * other.data[i][j];
+                    newMatrix.data[i][j] = (T)(Object)((double) this.data[i][j] * (double)other.data[i][j]);
                 }
             }
 
-            return new Matrix(newData);
+            return newMatrix;
         }
         else {
             throw new IndexOutOfBoundsException();
         }
     }
 
-    public Matrix divide(Matrix other) throws IndexOutOfBoundsException {
+    public Matrix<T> divide(Matrix<T> other) throws IndexOutOfBoundsException {
         int m = this.dimension[0];
         int n = this.dimension[1];
         if(m == other.dimension[0] && n == other.dimension[1]){
 
-            int[][] newData = new int[m][n];
+            Matrix<T> newMatrix = new Matrix<T>(this.data);
             for(int i = 0; i < m; i++) {
                 for(int j = 0; j < n; j++) {
-                    newData[i][j] = this.data[i][j] / other.data[i][j];
+                    newMatrix.data[i][j] = (T)(Object)((double) this.data[i][j] / (double)other.data[i][j]);
                 }
             }
-            return new Matrix(newData);
+            return newMatrix;
         }
         else {
             throw new IndexOutOfBoundsException();
         }
     }
 
-    public static Matrix zeros(int[] dims) {
-        int[][] newData = new int[dims[0]][dims[1]];
+    public static Matrix<Double> zeros(int[] dims) {
+        Double[][] newData = new Double[dims[0]][dims[1]];
         for(int i = 0; i < dims[0]; i++) {
             for (int j = 0; j < dims[1]; j++) {
-                newData[i][j] = 0;
+                newData[i][j] = 0d;
             }
         }
-        return new Matrix(newData);
+        return new Matrix<Double>(newData);
     }
 
-    public static Matrix ones(int[] dims) {
-        int[][] newData = new int[dims[0]][dims[1]];
+    public static Matrix<Double> ones(int[] dims) {
+        Double[][] newData = new Double[dims[0]][dims[1]];
         for(int i = 0; i < dims[0]; i++) {
             for (int j = 0; j < dims[1]; j++) {
                 if(i != j)
-                    newData[i][j] = 0;
+                    newData[i][j] = 0d;
                 else
-                    newData[i][j] = 1;
+                    newData[i][j] = 1d;
             }
         }
-        return new Matrix(newData);
+        return new Matrix<Double>(newData);
     }
 
-    public static Matrix range(int[] dims) {
-        int[][] newData = new int[dims[0]][dims[1]];
+    public static Matrix<Double> range(int[] dims) {
+        Double[][] newData = new Double[dims[0]][dims[1]];
         int counter = 0;
         for(int i = 0; i < dims[0]; i++) {
             for (int j = 0; j < dims[1]; j++) {
-                newData[i][j] = counter++;
+                newData[i][j] = (double)counter++;
             }
         }
-        return new Matrix(newData);
+        return new Matrix<Double>(newData);
     }
 
-    public static Matrix random(int[] dims) {
-        int[][] newData = new int[dims[0]][dims[1]];
-        Random rand = new Random();
-        int counter = 0;
+    public static Matrix<Double> random(int[] dims) {
+        Double[][] newData = new Double[dims[0]][dims[1]];
         for(int i = 0; i < dims[0]; i++) {
             for (int j = 0; j < dims[1]; j++) {
-                newData[i][j] = rand.nextInt(2);
+                newData[i][j] = Math.random();
             }
         }
-        return new Matrix(newData);
+        return new Matrix<Double>(newData);
     }
 
     @Override
@@ -162,32 +162,32 @@ public class Matrix {
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < this.dimension[0]; i++) {
             for (int j = 0; j < this.dimension[1]; j++) {
-                output.append(String.format("%5d", this.data[i][j]));
+                output.append(String.format("%5s", String.valueOf(this.data[i][j])));
             }
             output.append('\n');
         }
         return output.toString();
     }
 
-    public int sum() {
-        int out = 0;
+    public double sum() {
+        double out = 0;
         for (int i = 0; i < this.dimension[0]; i++)
             for (int j = 0; j < this.dimension[1]; j++)
-                out += this.data[i][j];
+                out += (double)this.data[i][j];
 
         return out;
     }
 
-    public int trace() {
-        int out = 0;
+    public double trace() {
+        double out = 0;
         int minDim = Math.min(this.dimension[0], this.dimension[1]);
         for (int i = 0; i < minDim; i++) {
-            out += this.data[i][i];
+            out += (double)this.data[i][i];
         }
         return out;
     }
 
-    public int getElement(int index) throws IndexOutOfBoundsException{
+    public T getElement(int index) throws IndexOutOfBoundsException{
         if(index < this.dimension[0] * this.dimension[1]){
             throw new IndexOutOfBoundsException();
         }
@@ -198,7 +198,7 @@ public class Matrix {
         return this.data[x][y];
     }
 
-    public int getElement(int indexX, int indexY) throws IndexOutOfBoundsException {
+    public T getElement(int indexX, int indexY) throws IndexOutOfBoundsException {
         if(indexY >= this.dimension[0] || indexX >= this.dimension[1]){
             throw new IndexOutOfBoundsException();
         }
@@ -211,17 +211,17 @@ public class Matrix {
         // Не знаю, что оно может ещё значить...
     }
 
-    public Matrix[] split(int count, int newN) {
-        // Я не знаю, как разделять эти матрицы
-        return new Matrix[0];
+    public Matrix<T>[] split(int count, int newN) {
+        // Я не знаю, как разделять эти матрицы (по какому критерию)
+        return null;
     }
 
     public int argmax() {
         int maxIndex = 0;
-        int maxItem = this.data[0][0];
+        T maxItem = this.data[0][0];
         for (int i = 0; i < this.dimension[0]; i++) {
             for (int j = 0; j < this.dimension[1]; j++) {
-                if(this.data[i][j] > maxItem) {
+                if((double)this.data[i][j] > (double)maxItem) {
                     maxIndex = i * this.dimension[0] + j;
                     maxItem = this.data[i][j];
                 }
@@ -232,10 +232,10 @@ public class Matrix {
 
     public int argmin() {
         int minIndex = 0;
-        int minItem = this.data[0][0];
+        T minItem = this.data[0][0];
         for (int i = 0; i < this.dimension[0]; i++) {
             for (int j = 0; j < this.dimension[1]; j++) {
-                if(this.data[i][j] < minItem) {
+                if((double)this.data[i][j] < (double)minItem) {
                     minIndex = i * this.dimension[0] + j;
                     minItem = this.data[i][j];
                 }
@@ -244,11 +244,11 @@ public class Matrix {
         return minIndex;
     }
 
-    public int max() {
-        int maxItem = this.data[0][0];
+    public T max() {
+        T maxItem = this.data[0][0];
         for (int i = 0; i < this.dimension[0]; i++) {
             for (int j = 0; j < this.dimension[1]; j++) {
-                if(this.data[i][j] > maxItem) {
+                if((double)this.data[i][j] > (double)maxItem) {
                     maxItem = this.data[i][j];
                 }
             }
@@ -256,11 +256,11 @@ public class Matrix {
         return maxItem;
     }
 
-    public int min() {
-        int minItem = this.data[0][0];
+    public T min() {
+        T minItem = this.data[0][0];
         for (int i = 0; i < this.dimension[0]; i++) {
             for (int j = 0; j < this.dimension[1]; j++) {
-                if(this.data[i][j] < minItem) {
+                if((double)this.data[i][j] < (double) minItem) {
                     minItem = this.data[i][j];
                 }
             }
@@ -272,10 +272,10 @@ public class Matrix {
         // Я не знаю, что эта функция должна делать :(
     }
 
-    public int search(int value) {
+    public int search(T value) {
         for (int i = 0; i < this.dimension[0]; i++) {
             for (int j = 0; j < this.dimension[1]; j++) {
-                if(value == this.data[i][j]) {
+                if((double)value - (double) this.data[i][j] < EPSILON) {
                     return i * this.dimension[0] + j;
                 }
             }
@@ -287,13 +287,13 @@ public class Matrix {
         return ((double) this.sum()) / ((double) this.getN());
     }
 
-    public Matrix transpose() {
-        int[][] newData = new int[this.dimension[1]][this.dimension[0]];
+    public Matrix<T> transpose() {
+        T[][] newData = (T[][])new Double[this.dimension[1]][this.dimension[0]];
         for (int i = 0; i < this.dimension[0]; i++) {
             for (int j = 0; j < this.dimension[1]; j++) {
                 newData[j][i] = this.data[i][j];
             }
         }
-        return new Matrix(newData);
+        return new Matrix<T>(newData);
     }
 }

@@ -164,6 +164,15 @@ public class Hero {
     }
 
     public void setAbilitiesSize(int abilitiesSize) {
+
+        int[] newAbilities = new int[inventorySize];
+        for(int i = 0; i < this.abilitiesSize; i++) {
+            newAbilities[i] = this.items[i];
+        }
+        for(int i = this.abilitiesSize; i < abilitiesSize - this.abilitiesSize; i++) {
+            newAbilities[i] = -1;
+        }
+        this.abilities = newAbilities;
         this.abilitiesSize = abilitiesSize;
     }
 
@@ -172,6 +181,14 @@ public class Hero {
     }
 
     public void setInventorySize(int inventorySize) {
+        int[] newInventory = new int[inventorySize];
+        for(int i = 0; i < this.inventorySize; i++) {
+            newInventory[i] = this.items[i];
+        }
+        for(int i = this.inventorySize; i < inventorySize - this.inventorySize; i++) {
+            newInventory[i] = -1;
+        }
+        this.items = newInventory;
         this.inventorySize = inventorySize;
     }
 
