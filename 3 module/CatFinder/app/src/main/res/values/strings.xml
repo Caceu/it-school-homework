@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CatFinder</string>
+    <string name="toast_found">You found the cat!</string>
+</resources>

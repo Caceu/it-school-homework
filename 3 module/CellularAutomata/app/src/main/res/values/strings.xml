@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Cellular Automaton</string>
+    <string name="greeting">Hello World!</string>
+    <string name="rule_hint">Rule #</string>
+</resources>
