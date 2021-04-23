@@ -13,6 +13,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
-        setContentView(new CellularAutomatonView(this, 1, paint));
+        setContentView(new CellularAutomatonView(this, 58, paint));
     }
 }
