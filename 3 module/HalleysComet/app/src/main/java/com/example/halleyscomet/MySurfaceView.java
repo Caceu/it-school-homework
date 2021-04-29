@@ -17,13 +17,13 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     Bitmap image;
     SurfaceThread thread;
     private float x, y;
-    private float degree;
-    private final float SPEED = .2f;
-    private final float RADIUS = 150.f;
-    private final float TINY_RADIUS = 6.f;
-    private StellarObject comet;
-    private StellarObject sun;
-    private StellarObject earth;
+    public float degree;
+    public final float SPEED = .2f;
+    public final float RADIUS = 150.f;
+    public final float TINY_RADIUS = 6.f;
+    public StellarObject comet;
+    public StellarObject sun;
+    public StellarObject earth;
 
 
     public MySurfaceView(Context context) {
@@ -48,47 +48,5 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
 
-    }
-
-    public void tick(long delta, Canvas canvas) {
-        this.draw(canvas);
-        if (canvas != null) {
-            canvas.drawColor(Color.BLACK);
-            degree += .05f * delta;
-            if (degree > 360.f)
-                degree -= 360.f;
-            Paint paint = new Paint();
-            paint.setColor(Color.WHITE);
-            comet = new StellarObject(RADIUS,
-                    RADIUS * 3,
-                    .05f,
-                    (float) canvas.getWidth() / 2 - RADIUS * 1.4f,
-                    (float) canvas.getHeight() / 2 + RADIUS * 2.3f,
-                    -60.f,
-                    paint
-            );
-
-            paint = new Paint();
-            paint.setColor(Color.argb(255, 0, 166, 255));
-            earth = new StellarObject(RADIUS / 2,
-                    RADIUS / 2,
-                    1f,
-                    (float) canvas.getWidth() / 2,
-                    (float) canvas.getHeight() / 2,
-                    0.f,
-                    paint
-            );
-
-            paint = new Paint();
-            paint.setColor(Color.YELLOW);
-            sun = new StellarObject((float) canvas.getWidth() / 2,
-                    (float) canvas.getHeight() / 2,
-                    20.f,
-                    paint);
-            // передавать дельту в каждый из объектов почему-то не работает, вставляя абсолютно тот же код
-            comet.draw(canvas, degree);
-            earth.draw(canvas, degree);
-            sun.draw(canvas, 0);
-        }
     }
 }
