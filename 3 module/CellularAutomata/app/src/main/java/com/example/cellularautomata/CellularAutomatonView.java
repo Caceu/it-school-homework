@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 public class CellularAutomatonView extends SurfaceView implements SurfaceHolder.Callback {
     private final String TAG = "CellularAutomaton";
     private SurfaceThread thread;
-    private  CellularAutomaton automaton;
-    private Paint paint;
+    public  CellularAutomaton automaton;
+    public Paint paint;
     private int ruleSet;
 
     public CellularAutomatonView(Context context) {
@@ -40,20 +40,6 @@ public class CellularAutomatonView extends SurfaceView implements SurfaceHolder.
         this.paint = paint;
         this.ruleSet = ruleSet;
     }
-
-    public void tick(Canvas canvas) {
-        super.draw(canvas);
-        if(automaton == null)
-            return;
-        float offset = (canvas.getWidth() - (float) automaton.getWidth()) / 2;
-        canvas.drawColor(Color.WHITE);
-        for (int y = 0; y < automaton.getHeight(); y++) {
-            for (int x = 0; x < automaton.getWidth(); x++) {
-                if (automaton.getGrid()[y][x])
-                    canvas.drawPoint(x + offset, y, paint);
-            }
-        }
-    }
     
     public void update(int ruleSet) {
         automaton.applyRules(ruleSet);
@@ -74,8 +60,6 @@ public class CellularAutomatonView extends SurfaceView implements SurfaceHolder.
 
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
-
+        thread.running = false;
     }
 }
-
-    

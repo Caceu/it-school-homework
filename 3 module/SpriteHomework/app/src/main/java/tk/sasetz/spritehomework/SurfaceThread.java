@@ -25,10 +25,10 @@ public class SurfaceThread extends Thread {
             Canvas canvas = surfaceHolder.lockCanvas();
             long currentTime = System.currentTimeMillis();
             long delta = currentTime - time;
-            synchronized (surfaceHolder) {
-                view.tick(delta, canvas);
-            }
             if (canvas != null) {
+                synchronized (surfaceHolder) {
+                    view.tick(delta, canvas);
+                }
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
             time = currentTime;
