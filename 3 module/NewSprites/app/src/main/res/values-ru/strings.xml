@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Новые Спрайты</string>
+    <string name="sprite_speed">Скорость спрайта</string>
+    <string name="tick_speed">Время на кадр (мс)</string>
+</resources>

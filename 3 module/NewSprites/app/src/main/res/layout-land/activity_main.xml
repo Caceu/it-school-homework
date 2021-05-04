@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <tk.sasetz.newsprites.SpriteView
+        android:id="@+id/spriteView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="200dp"
+        android:orientation="vertical">
+
+        <SeekBar
+            android:id="@+id/spriteSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seekbar_height"
+            android:max="@integer/max_speed"
+            android:min="@integer/min_speed"
+            android:progress="@integer/default_speed" />
+
+        <TextView
+            android:id="@+id/spriteSpeedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/sprite_speed" />
+
+        <SeekBar
+            android:id="@+id/tickSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/seekbar_height"
+            android:max="@integer/max_tick"
+            android:min="@integer/min_tick"
+            android:progress="@integer/default_tick" />
+
+        <TextView
+            android:id="@+id/tickSpeedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/tick_speed" />
+    </LinearLayout>
+</FrameLayout>

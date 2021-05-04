@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="max_speed">1000</integer>
+    <integer name="min_speed">15</integer>
+    <integer name="max_tick">350</integer>
+    <integer name="min_tick">10</integer>
+    <integer name="default_speed">200</integer>
+    <integer name="default_tick">50</integer>
+</resources>

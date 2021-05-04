@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">New Sprites</string>
+    <string name="sprite_speed">Sprite speed</string>
+    <string name="tick_speed">Time per frame (ms)</string>
+</resources>
